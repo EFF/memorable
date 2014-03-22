@@ -1,7 +1,7 @@
 function HomeController($scope, $http){    
-    var datasets = ['Quebec', 'Gatineau', 'Montreal', 'Sherbrook'],
+    var datasets = ['Quebec', 'Gatineau', 'Sherbrook'],
         
-            categories_index: {
+            categories_index = {
                 0: "Arts",
                 1: "Arts visuels",
                 2: "Atelier",
@@ -47,18 +47,18 @@ function HomeController($scope, $http){
                 42: "Salons",
                 43: "Salons et expositions",
                 44: "Événements sportifs"
-            },
+            };
             
-        moods = {
-            'Intello': [], 
+     $scope.moods = {
+            'Intello': [0], 
             'Énergétique' : [], 
             'Festif' : [], 
-            'Créatif' : [], 
+            'Créatif' : [1, 2], 
             'Chill': []
         };
-    
+
     $scope.events = [];
-    $scope.categories = [];
+    $scope.filteredEvents = [];
     
     var getData = function(dataset){
         $http.get("/client/javascripts/data/" + dataset + ".json")
@@ -81,7 +81,36 @@ function HomeController($scope, $http){
                                   .SelectMany(function(x) {
                                       return (typeof x.CATEG === 'object' ? x.CATEG : [x.CATEG])
                                   }).Distinct().ToArray();
-        
-        console.log($scope.categories);
     });
+
+
+
+
+    $scope.getEventsByMood = function(mood) {
+        $scope.filteredEvents = [];
+
+        window.Enumerable.From($scope.events).ForEach(function(event) {
+
+            var categoriesInEvent = window.Enumerable.From(typeof event.CATEG === 'object' ? event.CATEG : [event.CATEG])
+            
+            .Select(function(x) {
+                // console.log(x);
+                return window.Enumerable.From(categories_index).Where(function(c) {
+                    return x === c.Value;
+                }).FirstOrDefault();
+            }).Select(function(x) {return x == null ? null : parseInt(x.Key);}).ToArray();
+
+            var categoriesInMood = $scope.moods[mood];
+
+            var hasCategoryInMood = Enumerable.From(categoriesInEvent).Where(function(x) {
+                return x == null || categoriesInMood.indexOf(x) !== -1;
+            }).Any();
+
+            if(hasCategoryInMood) {
+                $scope.filteredEvents.push(event);
+            }
+
+        });
+    };
+
 }

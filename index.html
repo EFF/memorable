@@ -10,6 +10,9 @@
 </head>
   <body ng-app>
   <div ng-controller="HomeController">
+
+      <button ng-repeat="(mood, events) in moods" ng-click="getEventsByMood(mood)">{{mood}}</button>
+
       <h3 ng-repeat="category in categories">{{category}}</h3>
     <!-- <h3 ng-repeat="event in events">{{event.TITRE}}</h3> -->
   </div>
