@@ -10,7 +10,7 @@
 </head>
   <body ng-app>
   <div ng-controller="HomeController">
-    <h1>{{chiens}}</h1>
+    <h3 ng-repeat="event in events">{{event.TITRE}}</h3>
   </div>
     
     <script src="client/lib/angular/angular.js"></script>
