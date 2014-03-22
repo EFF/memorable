@@ -7,6 +7,6 @@
   ],
   "dependencies": {
     "angular": "~1.2.x",
-    "list.js": "~1.1.1"
+    "moment": "~2.5.1"
   }
 }
