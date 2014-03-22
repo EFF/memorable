@@ -5,3 +5,4 @@ client/lib
 dist
 .env
 *log
+.idea
