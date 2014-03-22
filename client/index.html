@@ -47,7 +47,7 @@
                 </h1>
             </div>
             <div class="row">
-                <button class="btn btn-lg btn-info" ng-repeat="(mood, events) in moods" ng-click="getEventsByMood(mood)">{{mood}}</button>
+                <button class="btn btn-lg btn-info" ng-repeat="(mood, events) in moods" ng-click="setCurrentMood(mood); filter()">{{mood}}</button>
             </div>
         </div>
         <div class="col-lg-6">

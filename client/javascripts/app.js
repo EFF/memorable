@@ -1,4 +1,8 @@
 function HomeController($scope, $http) {
+    var dateStart = null;
+    var dateEnd = null;
+    var currentMood = null;
+
     var datasets = ['Quebec', 'Gatineau', 'Sherbrook'];
     var categories_index = {
         0: "Arts",
@@ -82,17 +86,16 @@ function HomeController($scope, $http) {
             }).Distinct().ToArray();
     });
 
-    $scope.getEventsByMood = function (mood) {
-        $scope.filteredEvents = [];
+    var getEventsByMood = function (mood) {
+        var filteredEvents = [];
 
         window.Enumerable.From($scope.events).ForEach(function (event) {
 
             var categoriesInEvent = window.Enumerable.From(typeof event.CATEG === 'object' ? event.CATEG : [event.CATEG])
 
-                .Select(function (x) {
-                    // console.log(x);
+                .Select(function (category) {
                     return window.Enumerable.From(categories_index).Where(function (c) {
-                        return x === c.Value;
+                        return category === c.Value;
                     }).FirstOrDefault();
                 }).Select(function (x) {
                     return x == null ? null : parseInt(x.Key);
@@ -105,20 +108,21 @@ function HomeController($scope, $http) {
             }).Any();
 
             if (hasCategoryInMood) {
-                $scope.filteredEvents.push(event);
+                filteredEvents.push(event);
             }
 
         });
-    };
 
-    var dateStart = null;
-    var dateEnd = null;
+        return filteredEvents;
+    };
 
     $scope.today = function () {
         dateStart = moment(new Date()).toDate();
         dateEnd = moment(new Date()).toDate();
 
         $scope.selectedMoment = "aujourd'hui";
+
+        $scope.filter();
     };
 
     $scope.tomorrow = function () {
@@ -126,6 +130,8 @@ function HomeController($scope, $http) {
         dateEnd = moment(new Date()).add('days', 1).toDate();
 
         $scope.selectedMoment = "demain";
+
+        $scope.filter();
     };
 
     $scope.thisWeek = function () {
@@ -133,6 +139,8 @@ function HomeController($scope, $http) {
         dateEnd = moment(new Date()).endOf('week').add('days', 1).toDate();
 
         $scope.selectedMoment = "cette semaine";
+
+        $scope.filter();
     };
 
     $scope.nextWeek = function () {
@@ -140,6 +148,8 @@ function HomeController($scope, $http) {
         dateEnd = moment(new Date()).endOf('week').add('days', 1).add('weeks', 1).toDate();
 
         $scope.selectedMoment = "la semaine prochaine";
+
+        $scope.filter();
     };
 
     $scope.thisWeekEnd = function () {
@@ -147,6 +157,28 @@ function HomeController($scope, $http) {
         dateEnd = moment(new Date()).endOf('week').add('days', 1).toDate();
 
         $scope.selectedMoment = "en fin de semaine";
+
+        $scope.filter();
+    };
+
+    $scope.setCurrentMood = function (mood) {
+        currentMood = mood;
+    };
+
+    var getEventsByDate = function (events) {
+        return Enumerable.From(events).Where(function (event) {
+            return (moment(event.DT01).isBefore(dateStart) && moment(event.DT02).isAfter(dateStart)) || (moment(event.DT01).isBefore(dateEnd) && moment(event.DT02).isAfter(dateEnd))
+        }).ToArray();
+    };
+
+    $scope.filter = function () {
+        if (currentMood && dateStart && dateEnd) {
+            var eventsByMood = getEventsByMood(currentMood);
+
+            $scope.filteredEvents = getEventsByDate(eventsByMood);
+
+            console.log($scope.filteredEvents);
+        }
     };
 
     $scope.today();
