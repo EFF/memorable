@@ -10,7 +10,7 @@ function HomeController($scope, $http) {
         2: "Atelier",
         3: "Chant",
         4: "Musique",
-        5: "Activité petit budget",
+        // 5: "Activité petit budget",
         6: "Conférence",
         7: "Visite guidée",
         8: "Activité littéraire",
@@ -22,20 +22,20 @@ function HomeController($scope, $http) {
         14: "Jeune public",
         15: "Grand événement",
         16: "Sports",
-        17: "Vieux-Québec",
+        // 17: "Vieux-Québec",
         18: "Animation",
-        19: "Pâques",
+        // 19: "Pâques",
         20: "Artisanat",
         21: "Activités estivales",
         22: "Cirque",
-        23: "Noël",
-        24: "Parc Linéaire",
+        // 23: "Noël",
+        // 24: "Parc Linéaire",
         25: "Évenement",
         26: "Contes",
         27: "Humour",
-        28: "Relâche",
+        // 28: "Relâche",
         29: "Danse",
-        30: "Divers",
+        // 30: "Divers",
         31: "Photographie",
         32: "Multimédia",
         33: "Littérature",
@@ -53,12 +53,14 @@ function HomeController($scope, $http) {
     };
 
     $scope.moods = {
-        'Intello': [0],
-        'Énergétique': [],
-        'Festif': [],
-        'Créatif': [1, 2],
-        'Chill': []
+        'Intello': [0,1,6,7,8,9,10,11,13,26,33,34,35,36,38,39,43],
+        'Énergique': [12,14,16,21,22,29,44],
+        'Festif': [3,4,15,18,21,22,25,27,37,40,41,44],
+        'Créatif': [0,1,2,3,4,20,31,32],
+        'Chill': [7,8,9,11,13,26,27,31,32,33,34,36,38,39],
+        'Social': [6,9,12,14,15,16,18,21,22,25,27,29,35,36,37,40,41,42,43,44]
     };
+
 
     $scope.events = [];
     $scope.filteredEvents = [];
