@@ -60,7 +60,7 @@ function HomeController($scope, $http){
     $scope.filteredEvents = [];
     
     var getData = function(dataset){
-        $http.get("/client/javascripts/data/" + dataset + ".json")
+        $http.get("/javascripts/data/" + dataset + ".json")
             .success(function(data){
                 var eventsArray = data.EVTS.EVT;
                 $scope.events = $scope.events.concat(eventsArray);
@@ -109,20 +109,42 @@ function HomeController($scope, $http){
         });
     };
 
-    var dayOfTheWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-    var monthsOfTheYear = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-
-    var setCurrentDateTo = function (date) {
-        $scope.currentDate = date;
-        $scope.currentDateAsString = dayOfTheWeek[$scope.currentDate.getDay()] + ' ' + $scope.currentDate.getDate() + ' ' + monthsOfTheYear[$scope.currentDate.getMonth()];
-    };
+    var dateStart = null;
+    var dateEnd = null;
 
     $scope.today = function () {
-        setCurrentDateTo(new Date());
+        dateStart = moment(new Date()).toDate();
+        dateEnd = moment(new Date()).toDate();
+
+        $scope.selectedMoment = "aujourd'hui";
     };
 
     $scope.tomorrow = function () {
-        setCurrentDateTo(new Date(new Date().getTime() + 24 * 60 * 60 * 1000));
+        dateStart = moment(new Date()).add('days', 1).toDate();
+        dateEnd = moment(new Date()).add('days', 1).toDate();
+
+        $scope.selectedMoment = "demain";
+    };
+
+    $scope.thisWeek = function () {
+        dateStart = moment(new Date()).startOf('week').add('days', 1).toDate();
+        dateEnd = moment(new Date()).endOf('week').add('days', 1).toDate();
+
+        $scope.selectedMoment = "cette semaine";
+    };
+
+    $scope.nextWeek = function () {
+        dateStart = moment(new Date()).startOf('week').add('days', 1).add('weeks', 1).toDate();
+        dateEnd = moment(new Date()).endOf('week').add('days', 1).add('weeks', 1).toDate();
+
+        $scope.selectedMoment = "la semaine prochaine";
+    };
+
+    $scope.thisWeekEnd = function () {
+        dateStart = moment(new Date()).endOf('week').add('days', -1).toDate();
+        dateEnd = moment(new Date()).endOf('week').add('days', 1).toDate();
+
+        $scope.selectedMoment = "en fin de semaine";
     };
 
     $scope.today();

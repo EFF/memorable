@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>FLATTY - Free Bootstrap 3 Landing Page</title>
+    <title>Super events</title>
     <link href="css/theme.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
@@ -27,8 +27,8 @@
         <div class="col-lg-6">
             <div class="row">
                 <h1>
-                    <span>Quoi faire le</span>
-                    <span class="date-selection" ng-bind="currentDateAsString"></span>
+                    <span>Quoi faire</span><br/>
+                    <span class="date-selection" ng-bind="selectedMoment"></span>
                     <button type="button"
                             class="btn dropdown-toggle"
                             data-toggle="dropdown">
@@ -38,6 +38,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a ng-click="today()">Aujourd'hui</a></li>
                         <li><a ng-click="tomorrow()">Demain</a></li>
+                        <li><a ng-click="thisWeek()">Cette semaine</a></li>
                         <li><a ng-click="thisWeekEnd()">En fin de semaine</a></li>
                         <li><a ng-click="nextWeek()">La semaine prochaine</a></li>
                         <li class="divider"></li>
@@ -67,6 +68,8 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script src="lib/angular/angular.js"></script>
+<script src="lib/moment/min/moment.min.js"></script>
+<script src="javascripts/linq.min.js"></script>
 <script src="javascripts/app.js"></script>
 </body>
 </html>
