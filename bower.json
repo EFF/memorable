@@ -6,6 +6,7 @@
     "**/*.txt"
   ],
   "dependencies": {
-    "angular": "~1.2.x"
+    "angular": "~1.2.x",
+    "list.js": "~1.1.1"
   }
 }
