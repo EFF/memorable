@@ -10,10 +10,12 @@
 </head>
   <body ng-app>
   <div ng-controller="HomeController">
-    <h3 ng-repeat="event in events">{{event.TITRE}}</h3>
+      <h3 ng-repeat="category in categories">{{category}}</h3>
+    <!-- <h3 ng-repeat="event in events">{{event.TITRE}}</h3> -->
   </div>
     
     <script src="client/lib/angular/angular.js"></script>
+    <script src="client/javascripts/linq.min.js"></script>
     <script src="client/javascripts/app.js"></script>
 </body>
 </html>
