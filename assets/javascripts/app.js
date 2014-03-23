@@ -7,7 +7,7 @@ app.config(function ($compileProvider) {
 app.controller('HomeController', function ($scope, $http) {
     var dateStart = null;
     var dateEnd = null;
-    var currentMood = null;
+    $scope.currentMood = null;
 
     var datasets = ['Quebec', 'Gatineau', 'Sherbrook', 'Tourisme_quebec'];
     var categories_index = {
@@ -217,7 +217,7 @@ app.controller('HomeController', function ($scope, $http) {
     };
 
     $scope.setCurrentMood = function (mood) {
-        currentMood = mood;
+        $scope.currentMood = mood;
     };
 
     var getEventsByDate = function (events) {
@@ -232,8 +232,8 @@ app.controller('HomeController', function ($scope, $http) {
     };
 
     $scope.filter = function () {
-        if (currentMood && dateStart && dateEnd) {
-            var eventsByMood = getEventsByMood(currentMood);
+        if ($scope.currentMood && dateStart && dateEnd) {
+            var eventsByMood = getEventsByMood($scope.currentMood);
 
             var events = getEventsByDate(eventsByMood);
 

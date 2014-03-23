@@ -55,7 +55,7 @@
                 <div class="col-md-8">
                     <h1>Si je me sens</h1>
                     <button class="mood btn btn-lg btn-info" ng-cloak ng-repeat="(mood, events) in moods"
-                            ng-click="setCurrentMood(mood); filter()">#{{mood}}
+                            ng-click="setCurrentMood(mood); filter()" ng-class="{active: currentMood==mood}">#{{mood}}
                     </button>
                 </div>
             </div>
@@ -76,17 +76,17 @@
             </div>
 
             <div class="col-md-12">
-                {{event.HOR}}
-            </div>
-
-            <div class="col-md-12">
-                <a ng-href="tel:{{event.TEL1}}">{{event.TEL1}}</a>
+                <a ng-href="tel:{{event.TEL1}}"><i class="fa fa-phone"></i>{{event.TEL1}}</a>
             </div>
 
             <div class="col-md-6">
-                <p>Débute le {{event.DT01}}</p>
+                <p><i class="fa fa-calendar"></i>Débute le {{event.DT01}}</p>
 
-                <p>Termine le {{event.DT02}}</p>
+                <p><i class="fa fa-calendar"></i>Termine le {{event.DT02}}</p>
+
+                <div>
+                    {{event.HOR}}
+                </div>
             </div>
             <div class="col-md-6">
                 <p><a target="_blank" ng-href="http://maps.google.ca/?q={{event.LOC}}, {{event.AD}}"><i class="fa fa-map-marker"></i> {{event.LOC}}, {{event.AD}}</a></p>
@@ -96,6 +96,7 @@
                     <img ng-show="event.EVENTBRITE" src="assets/img/eventbrite.png"/>
                 </p>
             </div>
+
         </div>
         <hr>
     </div>
