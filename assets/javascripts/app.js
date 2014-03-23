@@ -9,7 +9,7 @@ app.controller('HomeController', function ($scope, $http) {
     var dateEnd = null;
     var currentMood = null;
 
-    var datasets = ['Quebec', 'Gatineau', 'Sherbrook'];
+    var datasets = ['Tourisme_quebec'];
     var categories_index = {
         0: "Arts",
         1: "Arts visuels",
@@ -137,7 +137,7 @@ app.controller('HomeController', function ($scope, $http) {
         $scope.categories = window.Enumerable
             .From($scope.events)
             .SelectMany(function (x) {
-                return (typeof x.CATEG === 'object' ? x.CATEG : [x.CATEG])
+                return (typeof x.CATEG === 'object' ? x.CATEG : [x.CATEG]);
             }).Distinct().ToArray();
     });
 
