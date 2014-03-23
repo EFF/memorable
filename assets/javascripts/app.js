@@ -7,7 +7,7 @@ app.config(function ($compileProvider) {
 app.controller('HomeController', function ($scope, $http) {
     var dateStart = null;
     var dateEnd = null;
-    var currentMood = null;
+    $scope.currentMood = null;
 
     var datasets = ['Quebec', 'Gatineau', 'Sherbrook', 'Tourisme_quebec'];
     var categories_index = {
@@ -115,7 +115,8 @@ app.controller('HomeController', function ($scope, $http) {
                         AD: event.event.venue.address + event.event.venue.address_2,
                         URL: event.event.url,
                         DESCRIP: descrip,
-                        EVENTBRITE: true
+                        EVENTBRITE: true,
+                        SOURCE: 'eventbrite'
                     };
                 }).ToArray();
 
@@ -127,7 +128,14 @@ app.controller('HomeController', function ($scope, $http) {
         $http.get("assets/javascripts/data/" + dataset + ".json")
             .success(function (data) {
                 var eventsArray = data.EVTS.EVT;
-                $scope.events = $scope.events.concat(eventsArray);
+
+                var alteredEvents = Enumerable.From(eventsArray).Select(function(event) {
+                    return $.extend(event, {SOURCE: dataset});
+                }).ToArray();
+
+                console.log(alteredEvents);
+
+                $scope.events = $scope.events.concat(alteredEvents);
             })
             .error(function () {
                 console.log("error");
@@ -222,7 +230,7 @@ app.controller('HomeController', function ($scope, $http) {
     };
 
     $scope.setCurrentMood = function (mood) {
-        currentMood = mood;
+        $scope.currentMood = mood;
     };
 
     var getEventsByDate = function (events) {
@@ -237,8 +245,8 @@ app.controller('HomeController', function ($scope, $http) {
     };
 
     $scope.filter = function () {
-        if (currentMood && dateStart && dateEnd) {
-            var eventsByMood = getEventsByMood(currentMood);
+        if ($scope.currentMood && dateStart && dateEnd) {
+            var eventsByMood = getEventsByMood($scope.currentMood);
 
             var events = getEventsByDate(eventsByMood);
 
@@ -253,12 +261,9 @@ app.controller('HomeController', function ($scope, $http) {
                 $('html, body').animate({
                     scrollTop: $("#row-0").offset().top
                 }, 'slow', 'swing');
-                
+
                 $('.row .description').readmore({maxHeight: 55, moreLink: '<a href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
             }, 100);
-
-
-            console.log($scope.filteredEvents);
         }
     };
 

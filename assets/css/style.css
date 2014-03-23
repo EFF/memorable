@@ -28,4 +28,21 @@ button.mood {
     font-weight: 100;
     font-size: 110px;
     margin-bottom: 0;
+
+button.mood:hover {
+    background-color: #1270AF !important;
+    border-color: #1270AF !important;
+    box-shadow: none !important;
+}
+
+button.mood:focus {
+    background-color: #1270AF !important;
+    border-color: #1270AF !important;
+    box-shadow: none !important;
+}
+
+button.active {
+    background-color: #1270AF !important;
+    border-color: #1270AF !important;
+    box-shadow: none !important;
 }
