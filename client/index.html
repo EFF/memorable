@@ -65,7 +65,7 @@
 </div>
 
 <div class="container">
-    <div class="row" ng-repeat="event in filteredEvents">
+    <div class="row" id="row-{{$index}}" ng-repeat="event in filteredEvents">
         <div class="col-lg-12">
             <h3>{{event.TITRE}}</h3>
 

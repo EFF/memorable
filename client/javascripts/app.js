@@ -231,6 +231,13 @@ function HomeController($scope, $http) {
                 $scope.filteredEvents.push(eventbriteEvents[i]);
             }
 
+            window.setTimeout(function () {
+                $('html, body').animate({
+                    scrollTop: $("#row-0").offset().top
+                    
+                }, 'slow', 'swing');
+            }, 100);
+
             console.log($scope.filteredEvents);
         }
     };
