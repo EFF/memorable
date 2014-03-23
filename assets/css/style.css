@@ -24,9 +24,15 @@ button.mood {
     border-radius: 0;
 }
 
-#headerwrap .logo {
+#headerwrap .visible-xs.logo {
     font-weight: 100;
-    font-size: 110px;
+    font-size: 5rem;
+    margin-bottom: 0;
+}
+
+#headerwrap .hidden-xs.logo {
+    font-weight: 100;
+    font-size: 10rem;
     margin-bottom: 0;
 }
 
