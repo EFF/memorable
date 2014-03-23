@@ -128,7 +128,14 @@ app.controller('HomeController', function ($scope, $http) {
         $http.get("assets/javascripts/data/" + dataset + ".json")
             .success(function (data) {
                 var eventsArray = data.EVTS.EVT;
-                $scope.events = $scope.events.concat(eventsArray);
+
+                var alteredEvents = Enumerable.From(eventsArray).Select(function(event) {
+                    return $.extend(event, {SOURCE: dataset});
+                }).ToArray();
+
+                console.log(alteredEvents);
+
+                $scope.events = $scope.events.concat(alteredEvents);
             })
             .error(function () {
                 console.log("error");
