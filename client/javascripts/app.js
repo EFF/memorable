@@ -61,9 +61,57 @@ function HomeController($scope, $http) {
         'Social': [6,9,12,14,15,16,18,21,22,25,27,29,35,36,37,40,41,42,43,44]
     };
 
-
     $scope.events = [];
     $scope.filteredEvents = [];
+
+    var myLongitude, myLatitude, eventbriteEvents = [];
+
+    var getGeolocation = function (location) {
+        myLongitude = location.coords.longitude;
+        myLatitude = location.coords.latitude;
+
+        getNearbyEventsOnEventBrite();
+    };
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(getGeolocation);
+    }
+
+    var getDistance = function (lat1, lon1, lat2, lon2) {
+        var R = 6371; // km
+        var dLat = (lat2 - lat1).toRad();
+        var dLon = (lon2 - lon1).toRad();
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    };
+
+    var getNearbyEventsOnEventBrite = function () {
+
+        Eventbrite({ 'app_key': 'NSE6URISYN4F6UWFB6', 'user_key': null }, function (eb_client) {
+            // parameters to pass to the API
+            var params = { within: 75, within_unit: 'K', 'longitude': myLongitude, 'latitude': myLatitude, max: 5 };
+            // make a client request, provide a callback that will handle the response data
+            eb_client.event_search(params, function (response) {
+
+                eventbriteEvents = Enumerable.From(response.events).Skip(1).Select(function (event) {
+                    return {
+                        TITRE: event.event.title,
+                        DT01: event.event.start_date,
+                        DT02: event.event.end_date,
+                        LOC: event.event.venue.name,
+                        AD: event.event.venue.address + event.event.venue.address_2,
+                        URL: event.event.url,
+                        EVENTBRITE: true
+                    };
+                }).ToArray();
+
+            });
+        });
+
+    };
 
     var getData = function (dataset) {
         $http.get("/javascripts/data/" + dataset + ".json")
@@ -178,6 +226,17 @@ function HomeController($scope, $http) {
             var eventsByMood = getEventsByMood(currentMood);
 
             $scope.filteredEvents = getEventsByDate(eventsByMood);
+
+            for (var i in eventbriteEvents) {
+                $scope.filteredEvents.push(eventbriteEvents[i]);
+            }
+
+            window.setTimeout(function () {
+                $('html, body').animate({
+                    scrollTop: $("#row-0").offset().top
+                    
+                }, 'slow', 'swing');
+            }, 100);
 
             console.log($scope.filteredEvents);
         }

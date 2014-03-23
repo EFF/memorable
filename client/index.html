@@ -29,30 +29,30 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1>
-                        <span>Quoi faire</span><br/>
-                        <span class="date-selection" ng-bind="selectedMoment"></span>
-                        <button type="button"
-                                class="btn dropdown-toggle"
-                                data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="today()">Aujourd'hui</a></li>
-                            <li><a ng-click="tomorrow()">Demain</a></li>
-                            <li><a ng-click="thisWeek()">Cette semaine</a></li>
-                            <li><a ng-click="thisWeekEnd()">En fin de semaine</a></li>
-                            <li><a ng-click="nextWeek()">La semaine prochaine</a></li>
-                            <li class="divider"></li>
-                            <li><a ng-click="other()">Autres...</a></li>
-                        </ul>
+                        <span>Quoi faire</span><br />
+                        <div class="date-selection">
+                            <span data-toggle="dropdown" ng-bind="selectedMoment"></span>
+                            <a class="datepicker fa fa-caret-down dropdown-toggle"
+                                data-toggle="dropdown"></a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a ng-click="today()">Aujourd'hui</a></li>
+                                <li><a ng-click="tomorrow()">Demain</a></li>
+                                <li><a ng-click="thisWeek()">Cette semaine</a></li>
+                                <li><a ng-click="thisWeekEnd()">En fin de semaine</a></li>
+                                <li><a ng-click="nextWeek()">La semaine prochaine</a></li>
+                                <li class="divider"></li>
+                                <li><a ng-click="other()">Autres...</a></li>
+                            </ul>
+                        </div>
+
                     </h1>
                 </div>
             </div>
             <div class="row moods-selection">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <h1>Si je me sens</h1>
-                    <button class="btn btn-lg btn-info" ng-repeat="(mood, events) in moods"
+                    <button class="mood btn btn-lg btn-info" ng-repeat="(mood, events) in moods"
                             ng-click="setCurrentMood(mood); filter()">{{mood}}
                     </button>
                 </div>
@@ -65,7 +65,7 @@
 </div>
 
 <div class="container">
-    <div class="row" ng-repeat="event in filteredEvents">
+    <div class="row" id="row-{{$index}}" ng-repeat="event in filteredEvents">
         <div class="col-lg-12">
             <h3>{{event.TITRE}}</h3>
 
@@ -77,7 +77,10 @@
             <div class="col-md-6">
                 <p><i class="fa fa-map-marker"></i> {{event.LOC}}, {{event.AD}}</p>
 
-                <p><a href="{{event.URL}}" target="_blank">plus d'infos</a></p>
+                <p>
+                    <a href="{{event.URL}}" target="_blank">plus d'infos</a>
+                    <img ng-show="event.EVENTBRITE" src="img/eventbrite.png"/>
+                </p>
             </div>
         </div>
         <hr>
@@ -90,6 +93,7 @@
 <script src="lib/angular/angular.js"></script>
 <script src="lib/moment/min/moment.min.js"></script>
 <script src="javascripts/linq.min.js"></script>
+<script src="javascripts/EventBrite.jquery.js"></script>
 <script src="javascripts/app.js"></script>
 </body>
 </html>
