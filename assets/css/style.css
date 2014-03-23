@@ -2,6 +2,7 @@
     display: inline-block;
     background-color: #1270AF;
     padding: 5px 10px;
+    cursor: pointer;
 }
 
 .datepicker:hover,

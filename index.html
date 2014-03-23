@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
 
-<body ng-app ng-controller="HomeController">
+<body ng-app="events" ng-controller="HomeController">
 
 <div id="headerwrap">
     <div class="container">
@@ -42,8 +42,8 @@
                                 <li><a ng-click="thisWeek()">Cette semaine</a></li>
                                 <li><a ng-click="thisWeekEnd()">En fin de semaine</a></li>
                                 <li><a ng-click="nextWeek()">La semaine prochaine</a></li>
-                                <li class="divider"></li>
-                                <li><a ng-click="other()">Autres...</a></li>
+                                <li class="divider hide"></li>
+                                <li class="hide"><a ng-click="other()">Autres...</a></li>
                             </ul>
                         </div>
 
@@ -78,13 +78,17 @@
                 {{event.HOR}}
             </div>
 
+            <div class="col-md-12">
+                <a ng-href="tel:{{event.TEL1}}">{{event.TEL1}}</a>
+            </div>
+
             <div class="col-md-6">
                 <p>Débute le {{event.DT01}}</p>
 
                 <p>Termine le {{event.DT02}}</p>
             </div>
             <div class="col-md-6">
-                <p><i class="fa fa-map-marker"></i> {{event.LOC}}, {{event.AD}}</p>
+                <p><a target="_blank" ng-href="http://maps.google.ca/?q={{event.LOC}}, {{event.AD}}"><i class="fa fa-map-marker"></i> {{event.LOC}}, {{event.AD}}</a></p>
 
                 <p>
                     <a href="{{event.URL}}" target="_blank">plus d'information</a>
