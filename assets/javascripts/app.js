@@ -103,6 +103,10 @@ app.controller('HomeController', function ($scope, $http) {
             eb_client.event_search(params, function (response) {
 
                 eventbriteEvents = Enumerable.From(response.events).Skip(1).Select(function (event) {
+                    
+                    var descrip = event.event.description.replace(/\<.+?\>/g, '');
+                    descrip = descrip.replace(/\<\/.+?\>/, '');
+                    
                     return {
                         TITRE: event.event.title,
                         DT01: event.event.start_date,
@@ -110,6 +114,7 @@ app.controller('HomeController', function ($scope, $http) {
                         LOC: event.event.venue.name,
                         AD: event.event.venue.address + event.event.venue.address_2,
                         URL: event.event.url,
+                        DESCRIP: descrip,
                         EVENTBRITE: true
                     };
                 }).ToArray();
