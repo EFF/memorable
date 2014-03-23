@@ -85,7 +85,6 @@ app.controller('HomeController', function ($scope, $http) {
     var getGeolocation = function (location) {
         myLongitude = location.coords.longitude;
         myLatitude = location.coords.latitude;
-        console.log(myLatitude);
         getNearbyEventsOnEventBrite();
     };
 
