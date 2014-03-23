@@ -77,7 +77,10 @@
             <div class="col-md-6">
                 <p><i class="fa fa-map-marker"></i> {{event.LOC}}, {{event.AD}}</p>
 
-                <p><a href="{{event.URL}}" target="_blank">plus d'infos</a></p>
+                <p>
+                    <a href="{{event.URL}}" target="_blank">plus d'infos</a>
+                    <img ng-show="event.EVENTBRITE" src="img/eventbrite.png"/>
+                </p>
             </div>
         </div>
         <hr>
@@ -90,6 +93,7 @@
 <script src="lib/angular/angular.js"></script>
 <script src="lib/moment/min/moment.min.js"></script>
 <script src="javascripts/linq.min.js"></script>
+<script src="javascripts/EventBrite.jquery.js"></script>
 <script src="javascripts/app.js"></script>
 </body>
 </html>
