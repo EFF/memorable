@@ -53,3 +53,15 @@ button.active {
     text-align: justify;
     font-size: 1.2em;
 }
+
+#google_translate_element {
+    display:none;
+}
+
+#getEnglish {
+    position: absolute;
+    right: 30px;
+    top: 40px;
+    color: white;
+    font-weight: bold;
+}

@@ -80,6 +80,11 @@ app.controller('HomeController', function ($scope, $http) {
     $scope.events = [];
     $scope.filteredEvents = [];
 
+    $('#getEnglish').click(function() {
+        window.location = "#googtrans(en)";
+        window.location.reload();
+    });
+
     var myLongitude, myLatitude, locationSet = false, eventbriteEvents = [];
 
     var getGeolocation = function (location) {
