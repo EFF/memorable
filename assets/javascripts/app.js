@@ -252,9 +252,11 @@ app.controller('HomeController', function ($scope, $http) {
             window.setTimeout(function () {
                 $('html, body').animate({
                     scrollTop: $("#row-0").offset().top
-
                 }, 'slow', 'swing');
+                
+                $('.row .description').readmore({maxHeight: 55, moreLink: '<a href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
             }, 100);
+
 
             console.log($scope.filteredEvents);
         }
