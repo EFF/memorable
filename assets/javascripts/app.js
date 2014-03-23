@@ -103,6 +103,10 @@ app.controller('HomeController', function ($scope, $http) {
             eb_client.event_search(params, function (response) {
 
                 eventbriteEvents = Enumerable.From(response.events).Skip(1).Select(function (event) {
+                    
+                    var descrip = event.event.description.replace(/\<.+?\>/g, '');
+                    descrip = descrip.replace(/\<\/.+?\>/, '');
+                    
                     return {
                         TITRE: event.event.title,
                         DT01: event.event.start_date,
@@ -110,6 +114,7 @@ app.controller('HomeController', function ($scope, $http) {
                         LOC: event.event.venue.name,
                         AD: event.event.venue.address + event.event.venue.address_2,
                         URL: event.event.url,
+                        DESCRIP: descrip,
                         EVENTBRITE: true
                     };
                 }).ToArray();
@@ -222,7 +227,12 @@ app.controller('HomeController', function ($scope, $http) {
 
     var getEventsByDate = function (events) {
         return Enumerable.From(events).Where(function (event) {
-            return (moment(event.DT01).isBefore(dateStart) && moment(event.DT02).isAfter(dateStart)) || (moment(event.DT01).isBefore(dateEnd) && moment(event.DT02).isAfter(dateEnd))
+            if (event.DT01 && event.DT02) {
+                return (moment(event.DT01).isBefore(dateStart) && moment(event.DT02).isAfter(dateStart)) || (moment(event.DT01).isBefore(dateEnd) && moment(event.DT02).isAfter(dateEnd))
+            }
+            else {
+                return moment(event.DT01).isSame(dateStart, 'day') || moment(event.DT01).isSame(dateEnd, 'day') || (moment(event.DT01).isAfter(dateStart) && moment(event.DT01).isBefore(dateEnd));
+            }
         }).ToArray();
     };
 
@@ -242,9 +252,11 @@ app.controller('HomeController', function ($scope, $http) {
             window.setTimeout(function () {
                 $('html, body').animate({
                     scrollTop: $("#row-0").offset().top
-
                 }, 'slow', 'swing');
+                
+                $('.row .description').readmore({maxHeight: 55, moreLink: '<a href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
             }, 100);
+
 
             console.log($scope.filteredEvents);
         }
