@@ -80,6 +80,11 @@ app.controller('HomeController', function ($scope, $http) {
     $scope.events = [];
     $scope.filteredEvents = [];
 
+    $('#getEnglish').click(function() {
+        window.location = "#googtrans(en)";
+        window.location.reload();
+    });
+
     var myLongitude, myLatitude, locationSet = false, eventbriteEvents = [];
 
     var getGeolocation = function (location) {
@@ -295,7 +300,7 @@ app.controller('HomeController', function ($scope, $http) {
                     scrollTop: $("#results").offset().top
                 }, 'slow', 'swing');
 
-                $('.row .description').readmore({maxHeight: 55, moreLink: '<a class="" href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
+                $('.row .description').readmore({maxHeight: 50, moreLink: '<a class="" href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
             }, 100);
         }
     };
