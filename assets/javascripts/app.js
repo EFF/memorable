@@ -9,7 +9,7 @@ app.controller('HomeController', function ($scope, $http) {
     var dateEnd = null;
     var currentMood = null;
 
-    var datasets = ['Tourisme_quebec'];
+    var datasets = ['Quebec', 'Gatineau', 'Sherbrook', 'Tourisme_quebec'];
     var categories_index = {
         0: "Arts",
         1: "Arts visuels",
