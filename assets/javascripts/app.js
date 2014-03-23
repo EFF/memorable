@@ -283,7 +283,7 @@ app.controller('HomeController', function ($scope, $http) {
                 events.push(eventbriteEvents[i]);
             }
 
-            $scope.filteredEvents = Enumerable.From(events).ToArray();
+            $scope.filteredEvents = Enumerable.From(events).Shuffle().ToArray();
 
             window.setTimeout(function () {
                 $('html, body').animate({
