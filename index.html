@@ -10,7 +10,7 @@
     <title>Super events</title>
     <link href="assets/css/theme.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,900' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
@@ -26,42 +26,49 @@
 
 <div id="headerwrap">
     <div class="container">
-        <div class="col-lg-6">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>
-                        <span>Quoi faire</span><br/>
-
-                        <div class="date-selection">
-                            <span data-toggle="dropdown" ng-bind="selectedMoment"></span>
-                            <a class="datepicker fa fa-caret-down dropdown-toggle"
-                               data-toggle="dropdown"></a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a ng-click="today()">Aujourd'hui</a></li>
-                                <li><a ng-click="tomorrow()">Demain</a></li>
-                                <li><a ng-click="thisWeek()">Cette semaine</a></li>
-                                <li><a ng-click="thisWeekEnd()">En fin de semaine</a></li>
-                                <li><a ng-click="nextWeek()">La semaine prochaine</a></li>
-                                <li class="divider hide"></li>
-                                <li class="hide"><a ng-click="other()">Autres...</a></li>
-                            </ul>
-                        </div>
-
-                    </h1>
-                </div>
-            </div>
-            <div class="row moods-selection">
-                <div class="col-md-8">
-                    <h1>Si je me sens</h1>
-                    <button class="mood btn btn-lg btn-info" ng-cloak ng-repeat="(mood, events) in moods"
-                            ng-click="setCurrentMood(mood); filter()">#{{mood}}
-                    </button>
-                </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="logo">memorable</h1>
             </div>
         </div>
-        <div class="col-lg-6">
-            <img class="img-responsive" src="assets/img/iphone-hand.png" alt="">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>
+                            <span>Quoi faire</span><br/>
+
+                            <div class="date-selection">
+                                <span data-toggle="dropdown" ng-bind="selectedMoment"></span>
+                                <a class="datepicker fa fa-caret-down dropdown-toggle"
+                                   data-toggle="dropdown"></a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a ng-click="today()">Aujourd'hui</a></li>
+                                    <li><a ng-click="tomorrow()">Demain</a></li>
+                                    <li><a ng-click="thisWeek()">Cette semaine</a></li>
+                                    <li><a ng-click="thisWeekEnd()">En fin de semaine</a></li>
+                                    <li><a ng-click="nextWeek()">La semaine prochaine</a></li>
+                                    <li class="divider hide"></li>
+                                    <li class="hide"><a ng-click="other()">Autres...</a></li>
+                                </ul>
+                            </div>
+
+                        </h1>
+                    </div>
+                </div>
+                <div class="row moods-selection">
+                    <div class="col-md-8">
+                        <h1>Si je me sens</h1>
+                        <button class="mood btn btn-lg btn-info" ng-cloak ng-repeat="(mood, events) in moods"
+                                ng-click="setCurrentMood(mood); filter()">#{{mood}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <img class="img-responsive" src="assets/img/iphone-hand.png" alt="">
+            </div>
         </div>
     </div>
 </div>

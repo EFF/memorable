@@ -23,3 +23,9 @@ button.mood {
     margin: 6px;
     border-radius: 0;
 }
+
+#headerwrap .logo {
+    font-weight: 100;
+    font-size: 110px;
+    margin-bottom: 0;
+}
