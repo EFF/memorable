@@ -80,16 +80,19 @@ app.controller('HomeController', function ($scope, $http) {
     $scope.events = [];
     $scope.filteredEvents = [];
 
-    var myLongitude, myLatitude, eventbriteEvents = [];
+    var myLongitude, myLatitude, locationSet = false, eventbriteEvents = [];
 
     var getGeolocation = function (location) {
         myLongitude = location.coords.longitude;
         myLatitude = location.coords.latitude;
+        locationSet = true;
         getNearbyEventsOnEventBrite();
     };
 
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(getGeolocation);
+        navigator.geolocation.getCurrentPosition(getGeolocation, function() {
+            locationSet = false;
+        });
     }
 
     
@@ -277,7 +280,9 @@ app.controller('HomeController', function ($scope, $http) {
 
             var events = getEventsByDate(eventsByMood);
 
-            events = filterByLocation(events);
+            if(locationSet) {
+                events = filterByLocation(events);
+            }
 
             for (var i in eventbriteEvents) {
                 events.push(eventbriteEvents[i]);
