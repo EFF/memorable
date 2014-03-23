@@ -110,7 +110,6 @@ function HomeController($scope, $http) {
 
             });
         });
-
     };
 
     var getData = function (dataset) {
@@ -225,16 +224,19 @@ function HomeController($scope, $http) {
         if (currentMood && dateStart && dateEnd) {
             var eventsByMood = getEventsByMood(currentMood);
 
-            $scope.filteredEvents = getEventsByDate(eventsByMood);
+            var events = getEventsByDate(eventsByMood);
 
             for (var i in eventbriteEvents) {
-                $scope.filteredEvents.push(eventbriteEvents[i]);
+                events.push(eventbriteEvents[i]);
             }
+
+            $scope.filteredEvents = Enumerable.From(events).Shuffle().ToArray();
+
 
             window.setTimeout(function () {
                 $('html, body').animate({
                     scrollTop: $("#row-0").offset().top
-                    
+
                 }, 'slow', 'swing');
             }, 100);
 
