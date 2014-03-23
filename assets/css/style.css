@@ -47,3 +47,9 @@ button.active {
     border-color: #1270AF !important;
     box-shadow: none !important;
 }
+
+.description-row {
+    margin-bottom: 10px;
+    text-align: justify;
+    font-size: 1.2em;
+}

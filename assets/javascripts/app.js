@@ -295,7 +295,7 @@ app.controller('HomeController', function ($scope, $http) {
                     scrollTop: $("#results").offset().top
                 }, 'slow', 'swing');
 
-                $('.row .description').readmore({maxHeight: 55, moreLink: '<a class="" href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
+                $('.row .description').readmore({maxHeight: 50, moreLink: '<a class="" href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
             }, 100);
         }
     };
