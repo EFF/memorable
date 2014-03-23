@@ -1,9 +1,19 @@
 .date-selection {
     display: inline-block;
-    background-color: cadetblue;
+    background-color: #1270AF;
     padding: 5px 10px;
+}
+
+.datepicker:hover,
+.datepicker {
+    color: white;
+    text-decoration: none;
 }
 
 hr {
     width: 100%;
+}
+
+button.mood {
+    margin: 6px;
 }
