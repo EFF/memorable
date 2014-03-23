@@ -103,6 +103,10 @@ app.controller('HomeController', function ($scope, $http) {
             eb_client.event_search(params, function (response) {
 
                 eventbriteEvents = Enumerable.From(response.events).Skip(1).Select(function (event) {
+                    
+                    var descrip = event.event.description.replace(/\<.+?\>/g, '');
+                    descrip = descrip.replace(/\<\/.+?\>/, '');
+                    
                     return {
                         TITRE: event.event.title,
                         DT01: event.event.start_date,
@@ -110,7 +114,9 @@ app.controller('HomeController', function ($scope, $http) {
                         LOC: event.event.venue.name,
                         AD: event.event.venue.address + event.event.venue.address_2,
                         URL: event.event.url,
-                        EVENTBRITE: true
+                        DESCRIP: descrip,
+                        EVENTBRITE: true,
+                        SOURCE: 'eventbrite'
                     };
                 }).ToArray();
 
@@ -247,11 +253,10 @@ app.controller('HomeController', function ($scope, $http) {
             window.setTimeout(function () {
                 $('html, body').animate({
                     scrollTop: $("#row-0").offset().top
-
                 }, 'slow', 'swing');
-            }, 100);
 
-            console.log($scope.filteredEvents);
+                $('.row .description').readmore({maxHeight: 55, moreLink: '<a href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
+            }, 100);
         }
     };
 
