@@ -89,11 +89,13 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <p><a target="_blank" ng-href="http://maps.google.ca/?q={{event.LOC}}, {{event.AD}}"><i class="fa fa-map-marker"></i> {{event.LOC}}, {{event.AD}}</a></p>
+                <p><a target="_blank" ng-href="http://maps.google.ca/?q={{event.LOC}}, {{event.AD}}"><i
+                        class="fa fa-map-marker"></i> {{event.LOC}}, {{event.AD}}</a></p>
 
                 <p>
-                    <a ng-show="event.URL" href="{{event.URL}}" target="_blank"><i class="fa fa-external-link"></i>plus d'information</a>
-                    <img ng-show="event.EVENTBRITE" src="assets/img/eventbrite.png"/>
+                    <a ng-show="event.URL" href="{{event.URL}}" target="_blank"><i class="fa fa-external-link"></i>plus
+                        d'information</a>
+                    <img ng-src="assets/img/{{event.SOURCE}}.png"/>
                 </p>
             </div>
 
