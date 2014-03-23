@@ -1,4 +1,10 @@
-function HomeController($scope, $http) {
+var app = angular.module('events', []);
+
+app.config(function ($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+});
+
+app.controller('HomeController', function ($scope, $http) {
     var dateStart = null;
     var dateEnd = null;
     var currentMood = null;
@@ -53,12 +59,12 @@ function HomeController($scope, $http) {
     };
 
     $scope.moods = {
-        'Intello': [0,1,6,7,8,9,10,11,13,26,33,34,35,36,38,39,43],
-        'Énergique': [12,14,16,21,22,29,44],
-        'Festif': [3,4,15,18,21,22,25,27,37,40,41,44],
-        'Créatif': [0,1,2,3,4,20,31,32],
-        'Chill': [7,8,9,11,13,26,27,31,32,33,34,36,38,39],
-        'Social': [6,9,12,14,15,16,18,21,22,25,27,29,35,36,37,40,41,42,43,44]
+        'Intello': [0, 1, 6, 7, 8, 9, 10, 11, 13, 26, 33, 34, 35, 36, 38, 39, 43],
+        'Énergique': [12, 14, 16, 21, 22, 29, 44],
+        'Festif': [3, 4, 15, 18, 21, 22, 25, 27, 37, 40, 41, 44],
+        'Créatif': [0, 1, 2, 3, 4, 20, 31, 32],
+        'Chill': [7, 8, 9, 11, 13, 26, 27, 31, 32, 33, 34, 36, 38, 39],
+        'Social': [6, 9, 12, 14, 15, 16, 18, 21, 22, 25, 27, 29, 35, 36, 37, 40, 41, 42, 43, 44]
     };
 
     $scope.events = [];
@@ -82,7 +88,7 @@ function HomeController($scope, $http) {
         var dLat = (lat2 - lat1).toRad();
         var dLon = (lon2 - lon1).toRad();
         var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+            Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
@@ -110,11 +116,10 @@ function HomeController($scope, $http) {
 
             });
         });
-
     };
 
     var getData = function (dataset) {
-        $http.get("/javascripts/data/" + dataset + ".json")
+        $http.get("assets/javascripts/data/" + dataset + ".json")
             .success(function (data) {
                 var eventsArray = data.EVTS.EVT;
                 $scope.events = $scope.events.concat(eventsArray);
@@ -225,16 +230,19 @@ function HomeController($scope, $http) {
         if (currentMood && dateStart && dateEnd) {
             var eventsByMood = getEventsByMood(currentMood);
 
-            $scope.filteredEvents = getEventsByDate(eventsByMood);
+            var events = getEventsByDate(eventsByMood);
 
             for (var i in eventbriteEvents) {
-                $scope.filteredEvents.push(eventbriteEvents[i]);
+                events.push(eventbriteEvents[i]);
             }
+
+            $scope.filteredEvents = Enumerable.From(events).Shuffle().ToArray();
+
 
             window.setTimeout(function () {
                 $('html, body').animate({
                     scrollTop: $("#row-0").offset().top
-                    
+
                 }, 'slow', 'swing');
             }, 100);
 
@@ -243,4 +251,4 @@ function HomeController($scope, $http) {
     };
 
     $scope.today();
-}
+});

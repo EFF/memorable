@@ -6,7 +6,6 @@ module.exports = (grunt) ->
                 options:
                     port: 8000
                     hostname: '0.0.0.0'
-                    base: 'client'
 
     grunt.initConfig config
 

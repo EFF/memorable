@@ -8,8 +8,8 @@
     <meta name="author" content="">
 
     <title>Super events</title>
-    <link href="css/theme.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="assets/css/theme.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
 
-<body ng-app ng-controller="HomeController">
+<body ng-app="events" ng-controller="HomeController">
 
 <div id="headerwrap">
     <div class="container">
@@ -29,11 +29,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1>
-                        <span>Quoi faire</span><br />
+                        <span>Quoi faire</span><br/>
+
                         <div class="date-selection">
                             <span data-toggle="dropdown" ng-bind="selectedMoment"></span>
                             <a class="datepicker fa fa-caret-down dropdown-toggle"
-                                data-toggle="dropdown"></a>
+                               data-toggle="dropdown"></a>
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a ng-click="today()">Aujourd'hui</a></li>
@@ -41,8 +42,8 @@
                                 <li><a ng-click="thisWeek()">Cette semaine</a></li>
                                 <li><a ng-click="thisWeekEnd()">En fin de semaine</a></li>
                                 <li><a ng-click="nextWeek()">La semaine prochaine</a></li>
-                                <li class="divider"></li>
-                                <li><a ng-click="other()">Autres...</a></li>
+                                <li class="divider hide"></li>
+                                <li class="hide"><a ng-click="other()">Autres...</a></li>
                             </ul>
                         </div>
 
@@ -59,7 +60,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <img class="img-responsive" src="img/ipad-hand.png" alt="">
+            <img class="img-responsive" src="assets/img/ipad-hand.png" alt="">
         </div>
     </div>
 </div>
@@ -69,31 +70,42 @@
         <div class="col-lg-12">
             <h3>{{event.TITRE}}</h3>
 
+            <div class="col-md-12">
+                {{event.DESCRIP}}
+            </div>
+
+            <div class="col-md-12">
+                {{event.HOR}}
+            </div>
+
+            <div class="col-md-12">
+                <a ng-href="tel:{{event.TEL1}}">{{event.TEL1}}</a>
+            </div>
+
             <div class="col-md-6">
                 <p>Débute le {{event.DT01}}</p>
 
                 <p>Termine le {{event.DT02}}</p>
             </div>
             <div class="col-md-6">
-                <p><i class="fa fa-map-marker"></i> {{event.LOC}}, {{event.AD}}</p>
+                <p><a target="_blank" ng-href="http://maps.google.ca/?q={{event.LOC}}, {{event.AD}}"><i class="fa fa-map-marker"></i> {{event.LOC}}, {{event.AD}}</a></p>
 
                 <p>
-                    <a href="{{event.URL}}" target="_blank">plus d'infos</a>
-                    <img ng-show="event.EVENTBRITE" src="img/eventbrite.png"/>
+                    <a href="{{event.URL}}" target="_blank">plus d'information</a>
+                    <img ng-show="event.EVENTBRITE" src="assets/img/eventbrite.png"/>
                 </p>
             </div>
         </div>
         <hr>
-        <div></div>
     </div>
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script src="lib/angular/angular.js"></script>
-<script src="lib/moment/min/moment.min.js"></script>
-<script src="javascripts/linq.min.js"></script>
-<script src="javascripts/EventBrite.jquery.js"></script>
-<script src="javascripts/app.js"></script>
+<script src="assets/lib/angular/angular.js"></script>
+<script src="assets/lib/moment/min/moment.min.js"></script>
+<script src="assets/javascripts/linq.min.js"></script>
+<script src="assets/javascripts/EventBrite.jquery.js"></script>
+<script src="assets/javascripts/app.js"></script>
 </body>
 </html>
