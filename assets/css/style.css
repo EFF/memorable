@@ -65,3 +65,19 @@ button.active {
     color: white;
     font-weight: bold;
 }
+
+.event-row {
+    padding-bottom: 15px;
+}
+
+.website {
+    padding: 0px !important;
+}
+
+.phone a {
+    font-size: 16px;
+}
+
+.phone {
+    margin-bottom: 10px;
+}
