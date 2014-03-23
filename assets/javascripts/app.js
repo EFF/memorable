@@ -1,5 +1,11 @@
 var app = angular.module('events', []);
 
+if (typeof(Number.prototype.toRad) === "undefined") {
+      Number.prototype.toRad = function() {
+        return this * Math.PI / 180;
+      }
+}
+
 app.config(function ($compileProvider) {
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
 });
@@ -9,7 +15,11 @@ app.controller('HomeController', function ($scope, $http) {
     var dateEnd = null;
     $scope.currentMood = null;
 
-    var datasets = ['Quebec', 'Gatineau', 'Sherbrook', 'Tourisme_quebec'];
+    var datasets = [{name: 'Quebec', latitude: 46.8580073, longitude: -71.3460728}, 
+        {name: 'Gatineau', latitude: 45.485499, longitude: -75.6269264}, 
+        {name: 'Sherbrook', latitude: 45.417094, longitude: -71.9741315}, 
+        {name: 'Tourisme_quebec'}];
+
     var categories_index = {
         0: "Arts",
         1: "Arts visuels",
@@ -75,7 +85,7 @@ app.controller('HomeController', function ($scope, $http) {
     var getGeolocation = function (location) {
         myLongitude = location.coords.longitude;
         myLatitude = location.coords.latitude;
-
+        console.log(myLatitude);
         getNearbyEventsOnEventBrite();
     };
 
@@ -83,12 +93,14 @@ app.controller('HomeController', function ($scope, $http) {
         navigator.geolocation.getCurrentPosition(getGeolocation);
     }
 
+    
+
     var getDistance = function (lat1, lon1, lat2, lon2) {
         var R = 6371; // km
-        var dLat = (lat2 - lat1).toRad();
-        var dLon = (lon2 - lon1).toRad();
+        var dLat = (lat2 - lat1) * Math.PI / 180;
+        var dLon = (lon2 - lon1) * Math.PI / 180;
         var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+            Math.cos(lat1.toRad()) * Math.cos(lat2 * Math.PI / 180) *
                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
@@ -125,15 +137,20 @@ app.controller('HomeController', function ($scope, $http) {
     };
 
     var getData = function (dataset) {
-        $http.get("assets/javascripts/data/" + dataset + ".json")
+        $http.get("assets/javascripts/data/" + dataset.name + ".json")
             .success(function (data) {
                 var eventsArray = data.EVTS.EVT;
 
                 var alteredEvents = Enumerable.From(eventsArray).Select(function(event) {
-                    return $.extend(event, {SOURCE: dataset});
-                }).ToArray();
+                    if(dataset.latitude != null) {
+                        event = $.extend(event, {LATITUDE: dataset.latitude, LONGITUDE: dataset.longitude});
+                    } else {
+                        event.LATITUDE = parseFloat(event.LATITUDE);
+                        event.LONGITUDE = parseFloat(event.LONGITUDE);
+                    }
 
-                console.log(alteredEvents);
+                    return $.extend(event, {SOURCE: dataset.name});
+                }).ToArray();
 
                 $scope.events = $scope.events.concat(alteredEvents);
             })
@@ -244,22 +261,34 @@ app.controller('HomeController', function ($scope, $http) {
         }).ToArray();
     };
 
+    var filterByLocation = function(events) {
+        return Enumerable.From(events).Where(function(event) {
+            if(typeof event.LATITUDE == 'number' && typeof event.LONGITUDE == 'number') {
+                var dist = getDistance(event.LATITUDE, event.LONGITUDE, myLatitude, myLongitude);
+                return dist <= 100;
+            } else {
+                return false;
+            }
+        }).ToArray();
+    };
+
     $scope.filter = function () {
         if ($scope.currentMood && dateStart && dateEnd) {
             var eventsByMood = getEventsByMood($scope.currentMood);
 
             var events = getEventsByDate(eventsByMood);
 
+            events = filterByLocation(events);
+
             for (var i in eventbriteEvents) {
                 events.push(eventbriteEvents[i]);
             }
 
-            $scope.filteredEvents = Enumerable.From(events).Shuffle().ToArray();
-
+            $scope.filteredEvents = Enumerable.From(events).ToArray();
 
             window.setTimeout(function () {
                 $('html, body').animate({
-                    scrollTop: $("#row-0").offset().top
+                    scrollTop: $("#results").offset().top
                 }, 'slow', 'swing');
 
                 $('.row .description').readmore({maxHeight: 55, moreLink: '<a class="" href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
