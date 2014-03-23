@@ -222,7 +222,12 @@ app.controller('HomeController', function ($scope, $http) {
 
     var getEventsByDate = function (events) {
         return Enumerable.From(events).Where(function (event) {
-            return (moment(event.DT01).isBefore(dateStart) && moment(event.DT02).isAfter(dateStart)) || (moment(event.DT01).isBefore(dateEnd) && moment(event.DT02).isAfter(dateEnd))
+            if (event.DT01 && event.DT02) {
+                return (moment(event.DT01).isBefore(dateStart) && moment(event.DT02).isAfter(dateStart)) || (moment(event.DT01).isBefore(dateEnd) && moment(event.DT02).isAfter(dateEnd))
+            }
+            else {
+                return moment(event.DT01).isSame(dateStart, 'day') || moment(event.DT01).isSame(dateEnd, 'day') || (moment(event.DT01).isAfter(dateStart) && moment(event.DT01).isBefore(dateEnd));
+            }
         }).ToArray();
     };
 
