@@ -114,7 +114,7 @@ function HomeController($scope, $http) {
     };
 
     var getData = function (dataset) {
-        $http.get("/assets/javascripts/data/" + dataset + ".json")
+        $http.get("assets/javascripts/data/" + dataset + ".json")
             .success(function (data) {
                 var eventsArray = data.EVTS.EVT;
                 $scope.events = $scope.events.concat(eventsArray);
