@@ -115,7 +115,8 @@ app.controller('HomeController', function ($scope, $http) {
                         AD: event.event.venue.address + event.event.venue.address_2,
                         URL: event.event.url,
                         DESCRIP: descrip,
-                        EVENTBRITE: true
+                        EVENTBRITE: true,
+                        SOURCE: 'eventbrite'
                     };
                 }).ToArray();
 
@@ -253,12 +254,9 @@ app.controller('HomeController', function ($scope, $http) {
                 $('html, body').animate({
                     scrollTop: $("#row-0").offset().top
                 }, 'slow', 'swing');
-                
+
                 $('.row .description').readmore({maxHeight: 55, moreLink: '<a href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
             }, 100);
-
-
-            console.log($scope.filteredEvents);
         }
     };
 
