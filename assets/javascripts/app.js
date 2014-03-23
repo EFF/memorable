@@ -262,7 +262,7 @@ app.controller('HomeController', function ($scope, $http) {
                     scrollTop: $("#row-0").offset().top
                 }, 'slow', 'swing');
 
-                $('.row .description').readmore({maxHeight: 55, moreLink: '<a href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
+                $('.row .description').readmore({maxHeight: 55, moreLink: '<a class="" href="#">Voir plus</a>', lessLink: '<a href="#">Voir moins</a>'});
             }, 100);
         }
     };
