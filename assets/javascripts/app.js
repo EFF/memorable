@@ -100,7 +100,11 @@ app.controller('HomeController', function ($scope, $http) {
         });
     }
 
-    
+    window.setInterval(function() {
+        $("iframe").hide();
+        $("html").removeClass('translated-ltr');
+        $("body").css('top', '0px');
+    }, 1000);
 
     var getDistance = function (lat1, lon1, lat2, lon2) {
         var R = 6371; // km
